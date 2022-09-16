@@ -15,6 +15,79 @@
 //     [11, 16, 15, 6],
 //     [10,  9,  8, 7]]
 
-function matrix(n) {}
+function matrix(n) {
+    const result = []
+    for (let i = 0; i < n; i++)
+        result.push(new Array(n))
+    let amount = n
+    let horizontal = true
+    let ascending = true
+    let counter = 0
+    let x = 0
+    let y = 0
+    let value = 1
+    const setValues = () =>
+    {
+        let startPoint = horizontal ? x : y
+        if (ascending)
+        {
+            for (let i = startPoint; i < startPoint + amount; i++, value++)
+            {
+                if (horizontal)
+                {
+                    result[y][i] = value
+                    x = i
+                }
+                else
+                {
+                    result[i][x] = value
+                    y = i
+                }
+                    
+            }
+        }
+        else
+        {
+            for (let i = startPoint; i > startPoint - amount; i--, value++)
+            {
+                if (horizontal)
+                {
+                    result[y][i] = value
+                    x = i
+                }
+
+                else
+                {
+                    result[i][x] = value
+                    y = 1
+                }
+
+            }
+        }
+    }
+
+    while (value <= n*n)
+    {
+        setValues()
+        counter++
+        
+        if (counter % 2 === 0)
+            ascending = !ascending
+        else 
+            amount--
+        if (horizontal && ascending)
+            y++
+        else if (horizontal && !ascending)
+            y--
+        else if (!horizontal && ascending)
+            x++
+        else
+            x--
+        horizontal = !horizontal
+
+
+    }
+    return result
+}
 
 module.exports = matrix;
